@@ -1,6 +1,7 @@
 //var createError = require('http-errors');
 var express = require('express');
-
+const expressHbs = require('express-handlebars');
+const bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('./config/database');
@@ -11,6 +12,15 @@ var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 
 var app = express();
+
+// #config view engine
+app.engine('hbs',expressHbs.engine({
+  extname:'hbs'
+}))
+app.set('view engine','hbs');
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
